@@ -1,0 +1,74 @@
+<!-- templates/products/product_detail.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .product-detail-image {
+        max-height: 500px;
+        object-fit: cover;
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .product-detail-container {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="product-detail-image" alt="{{ product.name }}">
+            {% else %}
+                <img src="https://via.placeholder.com/500x500" class="product-detail-image" alt="{{ product.name }}">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <div class="product-detail-container">
+                <h1 class="mb-4">{{ product.name }}</h1>
+                
+                <div class="product-info">
+                    <h4 class="text-muted">Product Details</h4>
+                    <hr>
+                    
+                    <div class="row mb-3">
+                        <div class="col-4 font-weight-bold">Category:</div>
+                        <div class="col-8">{{ product.get_category_display }}</div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-4 font-weight-bold">Price:</div>
+                        <div class="col-8">${{ product.price }}</div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-4 font-weight-bold">Quantity:</div>
+                        <div class="col-8">{{ product.quantity }} in stock</div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-4 font-weight-bold">Description:</div>
+                        <div class="col-8">{{ product.description }}</div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <a href="{% url 'product_update' product.pk %}" class="btn btn-warning me-2">
+                            <i class="bi bi-pencil"></i> Edit Product
+                        </a>
+                        <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger me-2">
+                            <i class="bi bi-trash"></i> Delete Product
+                        </a>
+                        <a href="{% url 'product_list' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
